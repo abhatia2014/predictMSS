@@ -1,22 +1,31 @@
+
+# Load Libraries ----------------------------------------------------------
+
+
 library(dplyr)
 library(caret)
 
-#load model and sample test data
+
+# Load Model --------------------------------------------------------------
+
+
 load("mss.RData")
 
 
 
 
-#****************Data Cleaning*********************************************************
-#**************************************************************************************
+# Test Data Format--------------------------------------------
 
-#input predictors as a dataframe (as a csv file in the format newdata) with fields
+#Required data format
 
 #          remedy_customer_id           industry      rule_name      src_geo    dst_geo                 event_vendors
 #         JPID000969        Financial Services     ProbesAndScans      JP      JP        IBM Internet Security Systems
 
-#where ever there is a ',' in the src_geo- means there are multiple regions for origination of attack
 
+# Data Cleaning -----------------------------------------------------------
+
+
+#where ever there is a ',' in the src_geo- means there are multiple regions for origination of attack
 #first convert the field to character
 
 newdata$src_geo=as.character(newdata$src_geo)
@@ -58,10 +67,15 @@ newdata$rule_name=as.factor(newdata$rule_name)
 newdata$remedy_customer_id=as.factor(newdata$remedy_customer_id)
 newdata$industry=as.factor(newdata$industry)
 
-# create a sample test data from the current testalert data
+
+# Create Sample Record  ---------------------------------------------------
+
 
 newdata=testalert[sample(nrow(testalert),1,replace = FALSE),]
 
 #this sample test data will be used for predictions
+
+# Run Prediction Algorithm ------------------------------------------------
+
 
 suppressPackageStartupMessages(analyst.suggest(newdata))
