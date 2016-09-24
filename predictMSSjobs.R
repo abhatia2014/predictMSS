@@ -79,3 +79,5 @@ newdata=testalert[sample(nrow(testalert),1,replace = FALSE),]
 
 
 suppressPackageStartupMessages(analyst.suggest(newdata))
+
+#we have to build rules around the prediction analysis for creating a recommendation engine
